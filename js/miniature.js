@@ -22,4 +22,4 @@ similarPicture.forEach(({ id, likes, url, description, comments }) => {
   pictureContainer.appendChild(pictureEl);
 });
 
-export { userPicture };
+export { userPicture, similarPicture };
