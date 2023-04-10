@@ -1,4 +1,4 @@
-const description = [
+const descriptionStat = [
   'Наваждение',
   'прогонит грусть наверняка',
   'накроет город с головой',
@@ -26,7 +26,7 @@ const description = [
   'Дети обнимут за шею небо',
 ];
 
-const message = [
+const messageStat = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -35,7 +35,7 @@ const message = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const name = [
+const nameStat = [
   'Александра',
   'Мария',
   'Михаил',
@@ -64,4 +64,4 @@ const name = [
 ];
 
 
-export {description, message, name};
+export { descriptionStat, messageStat, nameStat };

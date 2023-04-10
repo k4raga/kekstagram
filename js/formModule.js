@@ -1,4 +1,4 @@
-import { close, show } from "./util.js";
+import { close, show } from "./support.js";
 import "../pristine/pristine.min.js";
 
 const form = document.querySelector(".img-upload__form");
