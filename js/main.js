@@ -1,4 +1,2 @@
-import "./generation.js";
-import "./miniature.js";
-import "./formModule.js"
-import "./opendetail.js"
+import "./download/formModule.js";
+import "./cards/opendetail.js"

@@ -1,20 +1,17 @@
-import { userPicture, similarPicture } from "./miniature.js";
+import { similarPicture } from "./createMiniatures.js";
 
 console.log(similarPicture);
-console.log(userPicture);
 
 let clickPicktures = document.querySelectorAll(".picture");
 
 for (let i = 0; i < clickPicktures.length; i++) {
   let clickPickture = clickPicktures[i];
-
   clickPickture.addEventListener("click", (evt) => {
     evt.preventDefault();
     popupPicture.querySelector("img").src =
       clickPickture.querySelector("img").src;
     popupPicture.querySelector(".likes-count").textContent =
       clickPickture.querySelector(".picture__likes").textContent;
-
     popupPicture.classList.remove("hidden");
   });
 }

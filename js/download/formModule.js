@@ -1,5 +1,5 @@
-import { close, show } from "./support.js";
-import "../pristine/pristine.min.js";
+import { close, show } from "../support/support.js";
+import "../../pristine/pristine.min.js";
 
 const form = document.querySelector(".img-upload__form");
 const overlay = document.querySelector(".img-upload__overlay");
