@@ -1,2 +1,2 @@
 import "./download/formModule.js";
-import "./cards/opendetail.js"
+import "./cards/openDetail.js"

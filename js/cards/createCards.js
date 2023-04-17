@@ -4,11 +4,12 @@ import { nameStat, messageStat, descriptionStat } from "./date.js";
 const details = () => {
   const comments = (i) => {
     let createComment = () => {
-      return {
+      return  {
+        dataId: i,
         id: randNum(1, 100),
         avatar: `img/avatar-${randNum(1, 6)}.svg`,
-        messageStat: messageStat[randNum(1, 5)],
-        nameStat: nameStat[randNum(1, 24)],
+        message: messageStat[randNum(1, 5)],
+        name: nameStat[randNum(1, 24)],
       };
     };
     return Array.from(Array(i), () => createComment());
