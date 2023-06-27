@@ -1,4 +1,5 @@
 import { details } from "./createCards.js";
+import { isEscapeKey } from "../support/support.js";
 
 let bigPicture = document.querySelector(".big-picture");
 let pictureContainer = document.querySelector(".pictures");
@@ -64,24 +65,55 @@ for (let i = 0; i < minPictures.length; i++) {
     //Подставляем лайки
     bigPicture.querySelector(".likes-count").textContent =
       mini.querySelector(".picture__likes").textContent;
+    //Комментарии
     let comms = mini.querySelectorAll(".social__comment");
-    comms.forEach((comm) => {
-      let createCommsDetail = comment(
-        comm.querySelector(".social__picture").src,
-        comm.querySelector(".social__text").textContent
-      );
-      console.log(createCommsDetail);
-      comDetailContainer.insertAdjacentHTML("beforeend", createCommsDetail);
+    let commentsLoader = bigPicture.querySelector(".social__comments-loader");
+
+    let pasteComments = (count) => {
+      count.forEach((comm) => {
+        let createCommsDetail = comment(
+          comm.querySelector(".social__picture").src,
+          comm.querySelector(".social__text").textContent
+        );
+        comDetailContainer.insertAdjacentHTML("beforeend", createCommsDetail);
+      });
+    };
+    let commsArray = Array.from(comms);
+
+    let subarray = []; //массив в который будет выведен результат.
+    for (let i = 0; i < Math.ceil(commsArray.length / 5); i++) {
+      subarray[i] = commsArray.slice(i * 5, i * 5 + 5);
+    }
+
+    if (subarray.length == 1) {
+      bigPicture.querySelector(".comments-loader").classList.add("hidden");
+    }
+    pasteComments(subarray[0]);
+    let count = 1;
+    commentsLoader.addEventListener("click", (e) => {
+      e.preventDefault();
+      pasteComments(subarray[count++]);
+      if (subarray.length == count) {
+        bigPicture.querySelector(".comments-loader").classList.add("hidden");
+      }
     });
+    console.log(count);
   });
 
-  let hiddenComments = bigPicture
-    .querySelector(".social__comment-count")
-    .classList.add("hidden");
-  let hiddenUploads = bigPicture
-    .querySelector(".comments-loader")
-    .classList.add("hidden");
+  // let hiddenComments = bigPicture
+  //   .querySelector(".social__comment-count")
+  //   .classList.add("hidden");
+  // let hiddenUploads = bigPicture
+  //   .querySelector(".comments-loader")
+  //   .classList.add("hidden");
 }
+
+document.addEventListener("keydown", (e) => {
+  if (isEscapeKey(e)) {
+    e.preventDefault(e);
+    bigPicture.classList.add("hidden");
+  }
+});
 
 bigPicture
   .querySelector(".big-picture__cancel")

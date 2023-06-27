@@ -6,4 +6,8 @@ const close = (sel) => {
   sel.classList.add("hidden");
 };
 
-export { show, close };
+const isEscapeKey = (evt) => {
+  return evt.key === "Escape";
+};
+
+export { show, close, isEscapeKey };
