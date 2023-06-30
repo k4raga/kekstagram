@@ -5,6 +5,10 @@ let bigPicture = document.querySelector(".big-picture");
 let pictureContainer = document.querySelector(".pictures");
 let comments = document.querySelector(".social__comments");
 
+let socialCommentCount = bigPicture.querySelector(".comments-count");
+let currentSocialCommentCount = bigPicture.querySelector(
+  ".comments-count__current"
+);
 let comment = (avatar, text) => {
   return ` <li class="social__comment">
                 <img class="social__picture" src="${avatar}" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -68,7 +72,7 @@ for (let i = 0; i < minPictures.length; i++) {
     //Комментарии
     let comms = mini.querySelectorAll(".social__comment");
     let commentsLoader = bigPicture.querySelector(".social__comments-loader");
-
+    //Вставляем комментарии
     let pasteComments = (count) => {
       count.forEach((comm) => {
         let createCommsDetail = comment(
@@ -78,36 +82,55 @@ for (let i = 0; i < minPictures.length; i++) {
         comDetailContainer.insertAdjacentHTML("beforeend", createCommsDetail);
       });
     };
+    //Получаем массив из нодлиста
     let commsArray = Array.from(comms);
-
+    //разбиваем массив на части по 5
     let subarray = []; //массив в который будет выведен результат.
     for (let i = 0; i < Math.ceil(commsArray.length / 5); i++) {
       subarray[i] = commsArray.slice(i * 5, i * 5 + 5);
     }
-
+    //Скрываем загрузить еще если, полученный массив состоит из одного
     if (subarray.length == 1) {
-      bigPicture.querySelector(".comments-loader").classList.add("hidden");
+      commentsLoader.classList.add("hidden");
     }
+    //Устанавливаем значения
+    socialCommentCount.textContent = commsArray.length;
+    currentSocialCommentCount.textContent = commsArray.length;
+    //Проверка на количество комментариев, если их больше, задаем дефолтное значение, если меньше, то оставляем прошлое
+    if (commsArray.length > 5) {
+      currentSocialCommentCount.textContent = 5;
+    }
+    // первый массив комментариев, который мы выводим + инициализация переменной-счетчика
     pasteComments(subarray[0]);
-    let count = 1;
+    let count = 0;
+    // при нажатии на загрузить еще логика такая: Если существует текущая итерация в подмассиве мы прибавляем к дефолтномы значению, количество данных в подмасиве и добавляем их на страницу
     commentsLoader.addEventListener("click", (e) => {
       e.preventDefault();
-      pasteComments(subarray[count++]);
-      if (subarray.length == count) {
-        bigPicture.querySelector(".comments-loader").classList.add("hidden");
+      count++;
+      if (subarray[count]) {
+        currentSocialCommentCount.textContent =
+          Number(currentSocialCommentCount.textContent) +
+          subarray[count].length;
+        pasteComments(subarray[count]);
+      }
+      // Если есть еще в счетчике, то мы убираем hidden, иначе мы его убираем
+      currentSocialCommentCount + 5;
+      if (subarray.length == count++) {
+        commentsLoader.classList.remove("hidden");
+      } else {
+        commentsLoader.classList.add("hidden");
       }
     });
-    console.log(count);
+    // Устанавливаем значение по умолчанию и делаем логику, проверки
+    commentsLoader.classList.add("hidden");
+    if (commentsLoader.classList.contains("hidden") && subarray.length > 1) {
+      commentsLoader.classList.remove("hidden");
+    } else {
+      commentsLoader.classList.add("hidden");
+    }
   });
-
-  // let hiddenComments = bigPicture
-  //   .querySelector(".social__comment-count")
-  //   .classList.add("hidden");
-  // let hiddenUploads = bigPicture
-  //   .querySelector(".comments-loader")
-  //   .classList.add("hidden");
 }
-
+//поведение при нажатии на esc
 document.addEventListener("keydown", (e) => {
   if (isEscapeKey(e)) {
     e.preventDefault(e);
@@ -115,6 +138,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+//Поведение по нажатию на крестик
 bigPicture
   .querySelector(".big-picture__cancel")
   .addEventListener("click", (evt) => {
