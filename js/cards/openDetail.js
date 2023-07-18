@@ -34,7 +34,7 @@ let mini = (id, img, description, comments, likes, commentsText) => {
       </a>
     </div>`;
 };
-const fetchFun = (fun, dataFun) => () => {
+const fetchFun = (func, dataFun) => () => {
   return fetch("https://25.javascript.pages.academy/kekstagram/data")
     .then((responce) => {
       if (responce.ok) {
@@ -43,7 +43,7 @@ const fetchFun = (fun, dataFun) => () => {
     })
     .then((data) => {
       dataFun(data);
-      fun();
+      func();
     });
 };
 
