@@ -25,8 +25,7 @@ let sliderElement = document.querySelector(".effect-level__slider");
 let valueElement = document.querySelector(".effect-level__value");
 let filterName = "";
 let units = "";
-
-let scaleNum = Number(scaleValue.value.slice(0, -1));
+let scaleNum;
 const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
@@ -270,7 +269,9 @@ closePopup(successBtn, successPopup);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   let formData = new FormData(e.target);
-  console.log(formData);
+  for (let ent of formData.entries()) {
+    console.log(ent);
+  }
   fetch("https://25.javascript.pages.academy/kekstagram", {
     method: "POST",
     credentials: "same-origin",
