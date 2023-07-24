@@ -26,6 +26,7 @@ let valueElement = document.querySelector(".effect-level__value");
 let filterName = "";
 let units = "";
 
+let scaleNum = Number(scaleValue.value.slice(0, -1));
 const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
@@ -38,6 +39,7 @@ const pristine = new Pristine(form, {
 });
 
 const showModal = () => {
+  reset();
   overlay.classList.remove("hidden");
   body.classList.add("modal-open");
   document.addEventListener("keydown", onEscKeyDown);
@@ -121,6 +123,7 @@ const reset = function () {
   img.style.filter = "";
   scaleValue.setAttribute("value", "100%");
   img.style.transform = "scale(1)";
+  scaleNum = 100;
 };
 
 function sliderCreate(
@@ -158,7 +161,6 @@ scaleValue.value = "100%";
 img.style.transform = "scale(1)";
 scaleValue.setAttribute("value", scaleValue.value);
 console.log(scaleValue.value);
-let scaleNum = Number(scaleValue.value.slice(0, -1));
 
 scaleBigger.addEventListener("click", () => {
   if (scaleNum == 100) {
