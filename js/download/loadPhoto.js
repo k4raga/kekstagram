@@ -158,7 +158,7 @@ let optionsImg = { filterName: "", units: "", min: 0.1, max: 1, step: 0.1 };
 
 scaleValue.value = "100%";
 img.style.transform = "scale(1)";
-scaleValue.setAttribute("value", scaleValue.value);
+// scaleValue.setAttribute("value", scaleValue.value);
 console.log(scaleValue.value);
 
 scaleBigger.addEventListener("click", () => {
@@ -215,17 +215,14 @@ orig.addEventListener("click", () => {
 
 // ==============================================
 
-let showSucces = function () {
-  return `<section class="success hidden">
+let showSucces = `<section class="success hidden">
       <div class="success__inner">
         <h2 class="success__title">Изображение успешно загружено</h2>
         <button type="button" class="success__button">Круто!</button>
       </div>
     </section>`;
-};
 
-let showErrorLoad = function () {
-  return `<section class="error hidden">
+let showErrorLoad = `<section class="error hidden">
       <div class="error__inner">
         <h2 class="error__title">Ошибка загрузки файла</h2>
         <button type="button" class="error__button">
@@ -233,7 +230,6 @@ let showErrorLoad = function () {
         </button>
       </div>
     </section>`;
-};
 
 body.insertAdjacentHTML("beforeend", showSucces);
 body.insertAdjacentHTML("beforeend", showErrorLoad);
@@ -269,9 +265,6 @@ closePopup(successBtn, successPopup);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   let formData = new FormData(e.target);
-  for (let ent of formData.entries()) {
-    console.log(ent);
-  }
   fetch("https://25.javascript.pages.academy/kekstagram", {
     method: "POST",
     credentials: "same-origin",
@@ -294,4 +287,7 @@ form.addEventListener("submit", (e) => {
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
 });
+
 // ===========================================
+
+

@@ -1,6 +1,6 @@
 // import { details } from "./createCards.js";
 import { isEscapeKey } from "../support/support.js";
-
+import { randNum } from "../support/rand.js";
 let bigPicture = document.querySelector(".big-picture");
 let pictureContainer = document.querySelector(".pictures");
 let comments = document.querySelector(".social__comments");
@@ -34,7 +34,7 @@ let mini = (id, img, description, comments, likes, commentsText) => {
       </a>
     </div>`;
 };
-const fetchFun = (func, dataFun) => () => {
+const fetchFun = (dataFun) => () => {
   return fetch("https://25.javascript.pages.academy/kekstagram/data")
     .then((responce) => {
       if (responce.ok) {
@@ -43,7 +43,6 @@ const fetchFun = (func, dataFun) => () => {
     })
     .then((data) => {
       dataFun(data);
-      func();
     });
 };
 
@@ -171,7 +170,99 @@ let details = () => {
   }
 };
 
-let res = fetchFun(details, create);
-res();
+let dataFetch = [];
+let dataFunc = (data) => {
+  return (dataFetch = data);
+};
 
-//поведение при нажатии на esc
+let res = fetchFun(dataFunc);
+
+// let res = fetchFun(details, create);
+
+let imgFilters = document.querySelector(".img-filters");
+let filtersButtonActive = document.querySelector(
+  ".img-filters__button--active"
+);
+let defaultButton = document.querySelector("#filter-default");
+let randomButton = document.querySelector("#filter-random");
+let discussedButton = document.querySelector("#filter-discussed");
+imgFilters.classList.remove("img-filters--inactive");
+let buttonDescription = [defaultButton, randomButton, discussedButton];
+
+let resetButton = (els) => {
+  for (let el of els) {
+    if (el.classList.contains("img-filters__button--active")) {
+      el.classList.add("img-filters__button--inactive");
+      el.classList.remove("img-filters__button--active");
+    }
+  }
+};
+
+let activateButton = (el) => {
+  el.classList.add("img-filters__button--active");
+};
+
+let arrRandPictures = () =>
+  Array.from({ length: 25 }, (v, i) => i)
+    .sort((a, b) => 0.5 - Math.random())
+    .slice(0, 10);
+
+let dataFetch2 = [];
+
+let newDataArray = (data) => {
+  for (let pic of arrRandPictures()) {
+    dataFetch2.push(data[pic]);
+  }
+};
+
+let removeMini = (list) => {
+  for (let mini of list) {
+    mini.remove();
+  }
+};
+// переписать на свитч
+let createList = (data, outputData, flag) => {
+  if (flag == 1) {
+    newDataArray(data);
+    create(outputData);
+    dataFetch2 = [];
+    details();
+  }
+  if (flag == 2) {
+    let cloneData = data.slice(0);
+    cloneData.sort((a, b) => b.comments.length - a.comments.length);
+    create(cloneData);
+    details();
+  }
+  if (flag == 3) {
+    console.log(data);
+    create(data);
+    details();
+  }
+};
+
+async function as() {
+  const resp = await res();
+
+  createList(dataFetch, dataFetch2, 3);
+}
+
+as();
+
+let buttonFunc = (button, flag) => {
+  let allMini = document.querySelectorAll(".picture");
+  removeMini(allMini);
+  resetButton(buttonDescription);
+  activateButton(button);
+  createList(dataFetch, dataFetch2, flag);
+};
+
+let listenFunc = (button, flag) => {
+  button.addEventListener("click", (e) => {
+    buttonFunc(button, flag);
+  });
+};
+
+listenFunc(randomButton, 1);
+listenFunc(defaultButton, 3);
+listenFunc(discussedButton, 2);
