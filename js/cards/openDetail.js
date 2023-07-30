@@ -1,5 +1,5 @@
 // import { details } from "./createCards.js";
-import { isEscapeKey } from "../support/support.js";
+import { isEscapeKey, debounce } from "../support/support.js";
 import { randNum } from "../support/rand.js";
 let bigPicture = document.querySelector(".big-picture");
 let pictureContainer = document.querySelector(".pictures");
@@ -235,7 +235,6 @@ let createList = (data, outputData, flag) => {
     details();
   }
   if (flag == 3) {
-    console.log(data);
     create(data);
     details();
   }
@@ -251,10 +250,10 @@ as();
 
 let buttonFunc = (button, flag) => {
   let allMini = document.querySelectorAll(".picture");
+  debounce(() => deb(dataFetch, dataFetch2, flag), 500)();
   removeMini(allMini);
   resetButton(buttonDescription);
   activateButton(button);
-  createList(dataFetch, dataFetch2, flag);
 };
 
 let listenFunc = (button, flag) => {
@@ -262,6 +261,10 @@ let listenFunc = (button, flag) => {
     buttonFunc(button, flag);
   });
 };
+
+function deb(data, outputData, flag) {
+  createList(data, outputData, flag);
+}
 
 listenFunc(randomButton, 1);
 listenFunc(defaultButton, 3);

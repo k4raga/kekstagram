@@ -54,4 +54,4 @@ function throttle(callback, delayBetweenFrames) {
     }
   };
 }
-export { show, close, isEscapeKey };
+export { show, close, isEscapeKey, debounce };
