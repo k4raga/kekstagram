@@ -289,5 +289,16 @@ form.addEventListener("submit", (e) => {
 });
 
 // ===========================================
-
-
+let imgPic = img.querySelector("img");
+let imgFile = document.querySelector("#upload-file");
+let fileTypes = ["gif", "jpg", "jpeg", "png"];
+imgFile.addEventListener("change", () => {
+  let file = imgFile.files[0];
+  let fileName = file.name.toLowerCase();
+  let mathces = fileTypes.some((it) => {
+    return fileName.endsWith(it);
+  });
+  if (mathces) {
+    imgPic.src = URL.createObjectURL(file);
+  }
+});
