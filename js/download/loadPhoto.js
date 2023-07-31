@@ -1,4 +1,3 @@
-import { close, show } from "../support/support.js";
 import "../../pristine/pristine.min.js";
 import { isEscapeKey } from "../support/support.js";
 
@@ -23,8 +22,6 @@ let scaleSmaller = document.querySelector(".scale__control--smaller");
 let scaleValue = document.querySelector(".scale__control--value");
 let sliderElement = document.querySelector(".effect-level__slider");
 let valueElement = document.querySelector(".effect-level__value");
-let filterName = "";
-let units = "";
 let scaleNum;
 const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_LENGTH = 2;
@@ -154,11 +151,8 @@ function sliderCreate(
   });
 }
 
-let optionsImg = { filterName: "", units: "", min: 0.1, max: 1, step: 0.1 };
-
 scaleValue.value = "100%";
 img.style.transform = "scale(1)";
-// scaleValue.setAttribute("value", scaleValue.value);
 console.log(scaleValue.value);
 
 scaleBigger.addEventListener("click", () => {
@@ -171,6 +165,7 @@ scaleBigger.addEventListener("click", () => {
     img.style.transform = "scale(" + scaleNum * 0.01 + ")";
   }
 });
+
 scaleSmaller.addEventListener("click", () => {
   if (scaleNum == 25) {
     scaleValue.value = "25%";
@@ -289,6 +284,7 @@ form.addEventListener("submit", (e) => {
 });
 
 // ===========================================
+
 let imgPic = img.querySelector("img");
 let imgFile = document.querySelector("#upload-file");
 let fileTypes = ["gif", "jpg", "jpeg", "png"];

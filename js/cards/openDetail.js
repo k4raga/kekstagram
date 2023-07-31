@@ -1,9 +1,6 @@
-// import { details } from "./createCards.js";
 import { isEscapeKey, debounce } from "../support/support.js";
-import { randNum } from "../support/rand.js";
 let bigPicture = document.querySelector(".big-picture");
 let pictureContainer = document.querySelector(".pictures");
-let comments = document.querySelector(".social__comments");
 
 let commentsLoader = bigPicture.querySelector(".social__comments-loader");
 let socialCommentCount = bigPicture.querySelector(".comments-count");
@@ -163,8 +160,6 @@ let details = () => {
           commentsLoader.removeEventListener("click", addMoreComments);
         });
 
-      // commentsLoader.removeEventListener("click", addMoreComments);
-
       // Устанавливаем значение по умолчанию и делаем логику, проверки
     });
   }
@@ -177,12 +172,7 @@ let dataFunc = (data) => {
 
 let res = fetchFun(dataFunc);
 
-// let res = fetchFun(details, create);
-
 let imgFilters = document.querySelector(".img-filters");
-let filtersButtonActive = document.querySelector(
-  ".img-filters__button--active"
-);
 let defaultButton = document.querySelector("#filter-default");
 let randomButton = document.querySelector("#filter-random");
 let discussedButton = document.querySelector("#filter-discussed");
@@ -240,13 +230,13 @@ let createList = (data, outputData, flag) => {
   }
 };
 
-async function as() {
+async function viewList() {
   const resp = await res();
 
   createList(dataFetch, dataFetch2, 3);
 }
 
-as();
+viewList();
 
 let buttonFunc = (button, flag) => {
   let allMini = document.querySelectorAll(".picture");
